@@ -39,23 +39,23 @@ export function LandingPage() {
           <div className="features">
             <article>
               <p className="feature-icon" aria-hidden="true">
-                <BoardIcon size={26} color="var(--clr-primary)" />
+                <BoardIcon size={42} color="var(--clr-primary)" />
               </p>
-              <h3>Flexible boards</h3>
+              <h2 className="feature-title">Flexible boards</h2>
               <p>Organize tasks into customizable boards and columns to fit your workflow</p>
             </article>
             <article>
               <p className="feature-icon" aria-hidden="true">
-                <CheckMarkIcon size={24} color="var(--clr-primary)" />
+                <CheckMarkIcon size={42} color="var(--clr-primary)" />
               </p>
-              <h3>Check sh*t done</h3>
+              <h2 className="feature-title">Check sh*t done</h2>
               <p>Keep track of your progress and iterate through your tasks flowlessly</p>
             </article>
             <article>
               <p className="feature-icon" aria-hidden="true">
-                <BoardIcon size={26} color="var(--clr-primary)" />
+                <BoardIcon size={42} color="var(--clr-primary)" />
               </p>
-              <h3>Team collaboration</h3>
+              <h2 className="feature-title">Team collaboration</h2>
               <p>Invite team members to boards and collaborate on projects together</p>
             </article>
           </div>

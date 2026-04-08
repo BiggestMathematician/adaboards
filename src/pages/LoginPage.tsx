@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom'
+import { BoardIcon } from '../components/icons/BoardIcon'
 
 export function LoginPage() {
   return (
     <main className="auth-shell">
       <section className="auth-page">
         <header className="auth-header">
-          <p className="brand">
+        <p className="brand">
             <span className="brand-icon" aria-hidden="true">
-              ▣
+              <BoardIcon size={18} color="var(--color-light)" />
             </span>
             AdaBoards
           </p>
