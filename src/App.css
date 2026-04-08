@@ -184,6 +184,117 @@ a {
   font-size: 0.95rem;
 }
 
+.home-shell {
+  min-height: 100vh;
+  padding: 0;
+}
+
+.home-page {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 1.15rem 1.4rem;
+  color: var(--color-light);
+  background: #262430;
+  border: 0;
+}
+
+.home-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.home-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn-ghost-light {
+  background: #ffffff;
+  color: #282530;
+}
+
+.home-title {
+  margin: 0;
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Trebuchet MS', 'Segoe UI', sans-serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: -0.02em;
+}
+
+.home-title-row {
+  margin: 2rem 0 1.55rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.home-title span {
+  color: var(--clr-primary);
+}
+
+.home-boards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1rem;
+  max-width: 980px;
+}
+
+.board-card {
+  border: 1px solid #5a5768;
+  border-radius: 0.95rem;
+  background: rgba(37, 35, 49, 0.75);
+  padding: 0.95rem 1rem 0.9rem;
+}
+
+.board-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.board-card-head h2 {
+  margin: 0;
+  font-size: clamp(1.3rem, 2.2vw, 2rem);
+  line-height: 1.05;
+}
+
+.delete-board {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: var(--color-light);
+  padding: 0;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.board-updated {
+  margin: 0.35rem 0 0;
+  color: var(--color-muted);
+  font-size: 1rem;
+}
+
+.board-members {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.member-pill {
+  background: #f6f5f7;
+  color: #2f2d38;
+  border-radius: 0.4rem;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.9rem;
+}
+
 .auth-shell {
   min-height: 100vh;
   padding: 0;
@@ -292,6 +403,21 @@ a {
   .features {
     grid-template-columns: 1fr;
     gap: 0.7rem;
+  }
+
+  .home-page {
+    padding-inline: 0.9rem;
+  }
+
+  .home-actions {
+    width: auto;
+  }
+
+  .home-title-row {
+    margin-top: 1.4rem;
+    margin-bottom: 1.2rem;
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .auth-card {
