@@ -25,7 +25,7 @@ On utilise donc `day-1-setup` comme equivalent.
 
 ## To-do du jour (ordre recommande)
 
-- [x] Etape 1 - Landing page (UI)
+- [ ] Etape 1 - Landing page (UI)
 - [ ] Etape 2 - Home page (UI)
 - [ ] Etape 3 - Board page (UI)
 - [ ] Etape 4 - API boards (GET/POST/DELETE + navigation)
