@@ -1,5 +1,6 @@
 import { BoardIcon } from '../components/icons/BoardIcon'
 import { BinIcon } from '../components/icons/BinIcon'
+import { Link } from 'react-router-dom'
 
 const boardCards = [
   {
@@ -48,21 +49,25 @@ export function HomePage() {
           {boardCards.map((board) => (
             <article key={board.id} className="board-card">
               <div className="board-card-head">
-                <h2>{board.title}</h2>
+                <Link className="board-card-link" to={`/boards/${board.id}`}>
+                  <h2>{board.title}</h2>
+                </Link>
                 <button type="button" className="delete-board" aria-label="Delete board">
                   <BinIcon size={16} color="var(--color-light)" />
                 </button>
               </div>
 
-              <p className="board-updated">{board.updatedAt}</p>
+              <Link className="board-card-link" to={`/boards/${board.id}`}>
+                <p className="board-updated">{board.updatedAt}</p>
 
-              <div className="board-members">
-                {board.members.map((member) => (
-                  <span key={member} className="member-pill">
-                    {member}
-                  </span>
-                ))}
-              </div>
+                <div className="board-members">
+                  {board.members.map((member) => (
+                    <span key={member} className="member-pill">
+                      {member}
+                    </span>
+                  ))}
+                </div>
+              </Link>
             </article>
           ))}
         </section>
