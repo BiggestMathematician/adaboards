@@ -11,16 +11,17 @@
 
 .landing-shell {
   min-height: 100vh;
-  padding: 0.9rem;
+  padding: 0;
 }
 
 .landing {
-  width: min(960px, 100%);
-  margin: 0 auto;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
   padding: 1.15rem 1.4rem 0.9rem;
   color: var(--color-light);
   background: #262430;
-  border: 1px solid #3e3c49;
+  border: 0;
 }
 
 a {
@@ -48,7 +49,8 @@ a {
 
 .brand-icon {
   color: var(--color-light);
-  font-size: 1.3rem;
+  display: inline-flex;
+  line-height: 0;
 }
 
 .header-actions,
@@ -67,10 +69,13 @@ a {
 
 .hero h1 {
   margin: 0;
-  font-family: 'Comic Sans MS', 'Trebuchet MS', 'Segoe UI', sans-serif;
-  font-size: clamp(2rem, 6vw, 4rem);
-  line-height: 1.06;
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Trebuchet MS', 'Segoe UI', sans-serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.04;
   letter-spacing: -0.02em;
+  max-width: 100%;
+  margin-inline: auto;
+  white-space: nowrap;
 }
 
 .hero-accent {
@@ -119,45 +124,57 @@ a {
 
 .features-section {
   padding-bottom: 1rem;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
-.features-section h2 {
+.features-section > h2 {
   text-align: center;
   margin: 0 0 1.8rem;
-  font-size: clamp(1.9rem, 4vw, 2.9rem);
+  font-size: clamp(1.7rem, 3.2vw, 2.35rem);
   letter-spacing: -0.02em;
+  font-weight: 700;
 }
 
 .features {
   display: grid;
+  width: min(920px, 100%);
+  margin: 0 auto;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
+  gap: 0.75rem;
+  justify-content: space-evenly;
 }
 
 .features article {
   border: 1px solid #5a5768;
   background: rgba(37, 35, 49, 0.75);
-  border-radius: 0.95rem;
-  padding: 1.25rem 1.15rem;
+  border-radius: 0.85rem;
+  padding: 1rem 0.95rem;
+  min-height: 204px;
 }
 
 .feature-icon {
   margin: 0 0 0.55rem;
   color: var(--clr-primary);
-  font-size: 2rem;
-  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
 }
 
-.features h3 {
+.features .feature-title {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: clamp(1.2rem, 1.6vw, 1.6rem);
+  text-align: left;
+  line-height: 1.05;
 }
 
 .features p {
   margin: 0.45rem 0 0;
   color: var(--color-muted);
-  font-size: 1.02rem;
+  font-size: 0.9rem;
   line-height: 1.35;
+  max-width: 24ch;
 }
 
 .landing-footer {
@@ -167,19 +184,458 @@ a {
   font-size: 0.95rem;
 }
 
-.auth-shell {
+.home-shell {
   min-height: 100vh;
-  padding: 0.9rem;
+  padding: 0;
 }
 
-.auth-page {
-  width: min(960px, 100%);
-  min-height: calc(100vh - 1.8rem);
-  margin: 0 auto;
+.home-page {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
   padding: 1.15rem 1.4rem;
   color: var(--color-light);
   background: #262430;
-  border: 1px solid #3e3c49;
+  border: 0;
+}
+
+.home-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.home-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn-ghost-light {
+  background: #ffffff;
+  color: #282530;
+}
+
+.home-title {
+  margin: 0;
+  font-family: 'Gloria Hallelujah', 'Comic Sans MS', 'Trebuchet MS', 'Segoe UI', sans-serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: -0.02em;
+}
+
+.home-title-row {
+  margin: 2rem 0 1.55rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.home-title span {
+  color: var(--clr-primary);
+}
+
+.home-boards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1rem;
+  max-width: 980px;
+}
+
+.home-state {
+  margin: 0 0 1rem;
+  color: var(--color-muted);
+}
+
+.board-card {
+  border: 1px solid #5a5768;
+  border-radius: 0.95rem;
+  background: rgba(37, 35, 49, 0.75);
+  padding: 0.95rem 1rem 0.9rem;
+}
+
+.board-card-link {
+  display: block;
+}
+
+.board-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.board-card-head h2 {
+  margin: 0;
+  font-size: clamp(1.3rem, 2.2vw, 2rem);
+  line-height: 1.05;
+}
+
+.delete-board {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  color: var(--color-light);
+  padding: 0;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.board-updated {
+  margin: 0.35rem 0 0;
+  color: var(--color-muted);
+  font-size: 1rem;
+}
+
+.board-members {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.member-pill {
+  background: #f6f5f7;
+  color: #2f2d38;
+  border-radius: 0.4rem;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.9rem;
+}
+
+.board-shell {
+  min-height: 100vh;
+  padding: 0;
+}
+
+.board-page {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 1.15rem 1.4rem;
+  color: var(--color-light);
+  background: #262430;
+}
+
+.board-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+}
+
+.board-left {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.board-left h1 {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.4rem;
+  color: var(--color-light);
+  font-size: 1.5rem;
+}
+
+.board-left input {
+  min-width: min(360px, 60vw);
+  min-height: 2.6rem;
+  border: 1px solid #59566a;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: var(--color-light);
+  padding: 0.5rem 0.75rem;
+}
+
+.board-left input::placeholder {
+  color: #908d9a;
+}
+
+.board-actions {
+  display: flex;
+  align-items: center;
+}
+
+.kanban-grid {
+  margin-top: 1.1rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(250px, 1fr));
+  gap: 1.6rem;
+}
+
+.kanban-column {
+  border: 3px solid;
+  border-radius: 1rem;
+  min-height: calc(100vh - 11rem);
+  padding: 0.75rem;
+}
+
+.column-todo {
+  border-color: #f1df95;
+}
+
+.column-doing {
+  border-color: #89dfda;
+}
+
+.column-done {
+  border-color: #b7e88f;
+}
+
+.kanban-column-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.7rem;
+}
+
+.kanban-column-header h2 {
+  margin: 0;
+  font-size: clamp(1.85rem, 2.4vw, 2.4rem);
+}
+
+.icon-square {
+  width: 1.9rem;
+  height: 1.9rem;
+  border: 0;
+  border-radius: 0.35rem;
+  background: transparent;
+  color: #282530;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  cursor: pointer;
+}
+
+.kanban-cards {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.kanban-card {
+  border-radius: 0.6rem;
+  padding: 0.75rem 0.75rem 0.6rem;
+  color: #1d1b25;
+}
+
+.card-todo {
+  background: #f1df95;
+}
+
+.card-doing {
+  background: #89dfda;
+}
+
+.card-done {
+  background: #b7e88f;
+}
+
+.kanban-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.kanban-task-input {
+  border: 0;
+  background: transparent;
+  color: #1d1b25;
+  font-size: 1.02rem;
+  line-height: 1.2;
+  font-weight: 600;
+  width: 100%;
+  padding: 0;
+}
+
+.kanban-task-input:focus {
+  outline: none;
+}
+
+.kanban-card-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  width: 100%;
+}
+
+.actions-todo {
+  justify-content: flex-end;
+}
+
+.actions-doing {
+  justify-content: space-between;
+}
+
+.actions-done {
+  justify-content: flex-start;
+}
+
+.mini-icon-btn {
+  width: 1.45rem;
+  height: 1.45rem;
+  border: 0;
+  border-radius: 0.3rem;
+  background: transparent;
+  color: #f3f2f4;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+}
+
+.board-state {
+  margin: 0.65rem 0 0;
+  color: var(--color-muted);
+}
+
+.invite-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 8, 12, 0.5);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  z-index: 20;
+}
+
+.invite-modal {
+  width: min(540px, 100%);
+  border-radius: 0.95rem;
+  background: #2a2736;
+  border: 1px solid #4d4961;
+  padding: 1.1rem 1.15rem 1rem;
+}
+
+.invite-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.invite-modal-header h3 {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+}
+
+.invite-close {
+  border: 0;
+  background: transparent;
+  color: var(--color-light);
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+
+.invite-form-row {
+  margin-top: 0.85rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.6rem;
+}
+
+.invite-form-row input {
+  min-height: 2.65rem;
+  border: 1px solid #5b586a;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: var(--color-light);
+  padding: 0.5rem 0.7rem;
+}
+
+.invite-form-row input::placeholder {
+  color: #8f8b9c;
+}
+
+.invite-members {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.invite-members li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+}
+
+.invite-member-name {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 700;
+}
+
+.invite-member-email {
+  margin: 0.15rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+}
+
+.invite-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.invite-role-btn {
+  min-height: 2.1rem;
+  border: 0;
+  border-radius: 0.45rem;
+  background: #f3f2f4;
+  color: #282530;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.2rem 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: pointer;
+}
+
+.invite-delete-btn {
+  width: 2.1rem;
+  height: 2.1rem;
+  border: 0;
+  border-radius: 0.45rem;
+  background: #fd7882;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.auth-shell {
+  min-height: 100vh;
+  padding: 0;
+}
+
+.auth-page {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 1.15rem 1.4rem;
+  color: var(--color-light);
+  background: #262430;
+  border: 0;
 }
 
 .auth-header {
@@ -256,8 +712,8 @@ a {
 }
 
 @media (max-width: 768px) {
-  .landing-shell {
-    padding: 0.55rem;
+  .landing {
+    padding-inline: 0.9rem;
   }
 
   .hero {
@@ -268,16 +724,59 @@ a {
     font-size: 1.75rem;
   }
 
+  .hero h1 {
+    white-space: normal;
+  }
+
   .features {
     grid-template-columns: 1fr;
+    gap: 0.7rem;
   }
 
-  .auth-shell {
-    padding: 0.55rem;
+  .home-page {
+    padding-inline: 0.9rem;
   }
 
-  .auth-page {
-    min-height: calc(100vh - 1.1rem);
+  .home-actions {
+    width: auto;
+  }
+
+  .home-title-row {
+    margin-top: 1.4rem;
+    margin-bottom: 1.2rem;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .board-page {
+    padding-inline: 0.9rem;
+  }
+
+  .board-actions {
+    width: auto;
+  }
+
+  .board-left input {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .kanban-grid {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+
+  .kanban-column {
+    min-height: auto;
+  }
+
+  .invite-members li {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .invite-actions {
+    align-self: flex-end;
   }
 
   .auth-card {
