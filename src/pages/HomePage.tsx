@@ -1,23 +1,19 @@
 import { BoardIcon } from '../components/icons/BoardIcon'
 import { BinIcon } from '../components/icons/BinIcon'
 import { Link } from 'react-router-dom'
-
-const boardCards = [
-  {
-    id: 'dataviz',
-    title: 'Dataviz',
-    updatedAt: 'Edited 4 minutes ago',
-    members: ['Ada lovelace', 'Dorothy Vaughan'],
-  },
-  {
-    id: 'plateforme',
-    title: 'Plateforme de meubles',
-    updatedAt: 'Edited 2 days ago',
-    members: ['Ada lovelace'],
-  },
-]
+import { useBoards, useCreateBoard, useDeleteBoard } from '../hooks/useBoards'
 
 export function HomePage() {
+  const { data: boards = [], isLoading, isError } = useBoards()
+  const createBoardMutation = useCreateBoard()
+  const deleteBoardMutation = useDeleteBoard()
+
+  function onCreateBoard() {
+    const name = window.prompt('Board name')
+    if (!name || name.trim() === '') return
+    createBoardMutation.mutate(name.trim())
+  }
+
   return (
     <main className="home-shell">
       <section className="home-page">
@@ -40,33 +36,33 @@ export function HomePage() {
           <h1 className="home-title">
             Hello, <span>Ada Lovelace</span> !
           </h1>
-          <button type="button" className="btn">
+          <button type="button" className="btn" onClick={onCreateBoard} disabled={createBoardMutation.isPending}>
             Add board
           </button>
         </div>
 
+        {isLoading ? <p className="home-state">Loading boards...</p> : null}
+        {isError ? <p className="home-state">Cannot load boards for now.</p> : null}
+
         <section className="home-boards">
-          {boardCards.map((board) => (
+          {boards.map((board) => (
             <article key={board.id} className="board-card">
               <div className="board-card-head">
-                <Link className="board-card-link" to={`/boards/${board.id}`}>
-                  <h2>{board.title}</h2>
+                <Link className="board-card-link" to={`/boards/${board.id}`} state={{ boardName: board.name }}>
+                  <h2>{board.name}</h2>
                 </Link>
-                <button type="button" className="delete-board" aria-label="Delete board">
+                <button
+                  type="button"
+                  className="delete-board"
+                  aria-label="Delete board"
+                  onClick={() => deleteBoardMutation.mutate(board.id)}
+                >
                   <BinIcon size={16} color="var(--color-light)" />
                 </button>
               </div>
 
-              <Link className="board-card-link" to={`/boards/${board.id}`}>
-                <p className="board-updated">{board.updatedAt}</p>
-
-                <div className="board-members">
-                  {board.members.map((member) => (
-                    <span key={member} className="member-pill">
-                      {member}
-                    </span>
-                  ))}
-                </div>
+              <Link className="board-card-link" to={`/boards/${board.id}`} state={{ boardName: board.name }}>
+                <p className="board-updated">{board.updated_at ? `Updated ${new Date(board.updated_at).toLocaleDateString()}` : 'No recent update'}</p>
               </Link>
             </article>
           ))}

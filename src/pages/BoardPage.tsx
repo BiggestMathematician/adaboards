@@ -1,46 +1,79 @@
-import { Link, useParams } from 'react-router-dom'
 import { useState } from 'react'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import { AddIcon } from '../components/icons/AddIcon'
 import { BinIcon } from '../components/icons/BinIcon'
 import { PlayIcon } from '../components/icons/PlayIcon'
-
-const boardNames: Record<string, string> = {
-  dataviz: 'Dataviz',
-  plateforme: 'Plateforme de meubles',
-}
+import type { Column, Task } from '../api/types'
+import { useBoards } from '../hooks/useBoards'
+import { useCreateTask, useDeleteTask, useTasks, useUpdateTask } from '../hooks/useTasks'
 
 const boardColumns = [
   {
     key: 'todo',
     title: 'To Do',
     color: 'todo',
-    cards: [
-      "Appliquer l'asynchrone",
-      "Se familiariser avec une bibliotheque d'animation graphique JavaScript",
-    ],
   },
   {
     key: 'doing',
     title: 'Doing',
     color: 'doing',
-    cards: ['Se poser la question de la duree de vie de son applicatif'],
   },
   {
     key: 'done',
     title: 'Done',
     color: 'done',
-    cards: [
-      'Manipuler du CSS et du HTML',
-      'Mettre en place un environnement Web permettant de travailler en groupe sur le meme projet',
-      'Creer un repo commun et utiliser les commandes de base git',
-    ],
   },
 ]
 
 export function BoardPage() {
   const { boardId = '' } = useParams()
-  const boardName = boardNames[boardId] ?? 'Dataviz'
+  const location = useLocation()
+  const boardNameFromState = (location.state as { boardName?: string } | null)?.boardName
+  const { data: boards = [] } = useBoards()
+  const boardNameFromApi = boards.find((board) => board.id === boardId)?.name
+  const boardName = boardNameFromState ?? boardNameFromApi ?? boardId ?? 'Board'
+  const { data: tasks = [], isLoading, isError } = useTasks(boardId)
+  const createTaskMutation = useCreateTask(boardId)
+  const updateTaskMutation = useUpdateTask(boardId)
+  const deleteTaskMutation = useDeleteTask(boardId)
   const [isInviteOpen, setIsInviteOpen] = useState(false)
+  const [draftByTaskId, setDraftByTaskId] = useState<Record<string, string>>({})
+
+  function onDraftChange(task: Task, nextTitle: string) {
+    setDraftByTaskId((prev) => ({ ...prev, [task.id]: nextTitle }))
+
+    window.clearTimeout((onDraftChange as unknown as { _timer?: number })._timer)
+    ;(onDraftChange as unknown as { _timer?: number })._timer = window.setTimeout(() => {
+      if (nextTitle.trim() === '' || nextTitle.trim() === task.title) return
+      updateTaskMutation.mutate({
+        boardId,
+        taskId: task.id,
+        title: nextTitle.trim(),
+      })
+    }, 450)
+  }
+
+  function onMove(task: Task, direction: 'left' | 'right') {
+    const order: Column[] = ['todo', 'doing', 'done']
+    const index = order.indexOf(task.column)
+    const nextIndex = direction === 'left' ? index - 1 : index + 1
+    const nextColumn = order[nextIndex]
+    if (!nextColumn) return
+
+    updateTaskMutation.mutate({
+      boardId,
+      taskId: task.id,
+      column: nextColumn,
+    })
+  }
+
+  function onCreateTask(column: Column) {
+    createTaskMutation.mutate({
+      boardId,
+      title: 'Something to do',
+      column,
+    })
+  }
 
   return (
     <main className="board-shell">
@@ -61,29 +94,49 @@ export function BoardPage() {
           </div>
         </header>
 
+        {isLoading ? <p className="board-state">Loading tasks...</p> : null}
+        {isError ? <p className="board-state">Cannot load tasks for now.</p> : null}
+
         <section className="kanban-grid">
           {boardColumns.map((column) => (
             <article key={column.key} className={`kanban-column column-${column.color}`}>
               <header className="kanban-column-header">
                 <h2>{column.title}</h2>
-                <button type="button" className="icon-square" aria-label={`Add task to ${column.title}`}>
+                <button
+                  type="button"
+                  className="icon-square"
+                  aria-label={`Add task to ${column.title}`}
+                  onClick={() => onCreateTask(column.key as Column)}
+                >
                   <AddIcon size={18} color="#f3f2f4" />
                 </button>
               </header>
 
               <div className="kanban-cards">
-                {column.cards.map((card) => (
-                  <article key={card} className={`kanban-card card-${column.color}`}>
+                {tasks
+                  .filter((task) => task.column === column.key)
+                  .map((task) => (
+                  <article key={task.id} className={`kanban-card card-${column.color}`}>
                     <div className="kanban-card-head">
-                      <p>{card}</p>
-                      <button type="button" className="mini-icon-btn" aria-label="Delete task">
+                      <input
+                        className="kanban-task-input"
+                        value={draftByTaskId[task.id] ?? task.title}
+                        onChange={(event) => onDraftChange(task, event.target.value)}
+                        aria-label="Task title"
+                      />
+                      <button
+                        type="button"
+                        className="mini-icon-btn"
+                        aria-label="Delete task"
+                        onClick={() => deleteTaskMutation.mutate({ taskId: task.id })}
+                      >
                         <BinIcon size={12} color="#1d1b25" />
                       </button>
                     </div>
 
-                    <div className={`kanban-card-actions actions-${column.key}`}>
-                      {column.key !== 'todo' ? (
-                        <button type="button" className="mini-icon-btn" aria-label="Move task left">
+                    <div className={`kanban-card-actions actions-${task.column}`}>
+                      {task.column !== 'todo' ? (
+                        <button type="button" className="mini-icon-btn" aria-label="Move task left" onClick={() => onMove(task, 'left')}>
                           <PlayIcon
                             size={14}
                             color="var(--color-gray-800)"
@@ -91,8 +144,8 @@ export function BoardPage() {
                           />
                         </button>
                       ) : null}
-                      {column.key !== 'done' ? (
-                        <button type="button" className="mini-icon-btn" aria-label="Move task right">
+                      {task.column !== 'done' ? (
+                        <button type="button" className="mini-icon-btn" aria-label="Move task right" onClick={() => onMove(task, 'right')}>
                           <PlayIcon size={14} color="var(--color-gray-800)" />
                         </button>
                       ) : null}

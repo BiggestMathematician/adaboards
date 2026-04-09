@@ -242,6 +242,11 @@ a {
   max-width: 980px;
 }
 
+.home-state {
+  margin: 0 0 1rem;
+  color: var(--color-muted);
+}
+
 .board-card {
   border: 1px solid #5a5768;
   border-radius: 0.95rem;
@@ -445,11 +450,19 @@ a {
   gap: 0.5rem;
 }
 
-.kanban-card-head p {
-  margin: 0;
+.kanban-task-input {
+  border: 0;
+  background: transparent;
+  color: #1d1b25;
   font-size: 1.02rem;
   line-height: 1.2;
   font-weight: 600;
+  width: 100%;
+  padding: 0;
+}
+
+.kanban-task-input:focus {
+  outline: none;
 }
 
 .kanban-card-actions {
@@ -483,6 +496,11 @@ a {
   cursor: pointer;
   line-height: 1;
   padding: 0;
+}
+
+.board-state {
+  margin: 0.65rem 0 0;
+  color: var(--color-muted);
 }
 
 .invite-overlay {
