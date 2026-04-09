@@ -1,16 +1,15 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { getCurrentUserName } from '../api/auth'
+import { useAuth } from '../auth/useAuth'
 import { BoardIcon } from '../components/icons/BoardIcon'
 import { useLogin } from '../hooks/useAuth'
 
-const AUTH_TOKEN_KEY = 'adaboards-auth-token'
-const AUTH_REFRESH_TOKEN_KEY = 'adaboards-auth-refresh-token'
-const AUTH_USER_NAME_KEY = 'adaboards-user-name'
-
 export function LoginPage() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const { signIn } = useAuth()
   const loginMutation = useLogin()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -29,14 +28,20 @@ export function LoginPage() {
       { email: email.trim(), password },
       {
         onSuccess: async (authData) => {
-          window.localStorage.setItem(AUTH_TOKEN_KEY, authData.token)
-          window.localStorage.setItem(AUTH_REFRESH_TOKEN_KEY, authData.refresh_token)
-
           const apiUserName = await getCurrentUserName(authData.token)
           const fallbackName = email.trim().split('@')[0] || 'User'
-          window.localStorage.setItem(AUTH_USER_NAME_KEY, apiUserName ?? fallbackName)
+          const userName = apiUserName ?? fallbackName
 
-          navigate('/home')
+          signIn({
+            token: authData.token,
+            refreshToken: authData.refresh_token,
+            userName,
+          })
+
+          const from = (location.state as { from?: string } | null)?.from
+          const redirectTo =
+            from && from.startsWith('/') && !from.startsWith('//') ? from : '/home'
+          navigate(redirectTo)
         },
         onError: () => {
           setFormError('Invalid credentials. Please try again.')

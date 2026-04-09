@@ -1,6 +1,8 @@
 import { apiClient, ensureApiData } from './client'
 import type { AuthLoginResponse, AuthRegisterResponse } from './types'
 
+const API_BASE_URL = 'https://adaboards-api.vercel.app/api'
+
 type LoginInput = {
   email: string
   password: string
@@ -28,9 +30,30 @@ export async function register(input: RegisterInput): Promise<AuthRegisterRespon
   return ensureApiData(data, error)
 }
 
+/**
+ * Calls POST /auth/logout with Bearer token (and refresh token in body when present).
+ * Fails silently on network errors so the client can still clear local session.
+ */
+export async function logoutRemote(token: string, refreshToken: string): Promise<void> {
+  if (!token) return
+
+  try {
+    await fetch(`${API_BASE_URL}/auth/logout`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ refresh_token: refreshToken }),
+    })
+  } catch {
+    // ignore — local sign-out still applies
+  }
+}
+
 export async function getCurrentUserName(token: string): Promise<string | null> {
   try {
-    const response = await fetch('https://adaboards-api.vercel.app/api/user/', {
+    const response = await fetch(`${API_BASE_URL}/user/`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
