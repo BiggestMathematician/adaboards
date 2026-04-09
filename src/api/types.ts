@@ -13,6 +13,17 @@ export type Task = {
   column: Column
 }
 
+export type AuthLoginResponse = {
+  token: string
+  refresh_token: string
+}
+
+export type AuthRegisterResponse = {
+  id: string
+  email: string
+  name: string
+}
+
 type JsonBody<T> = {
   content: {
     'application/json': T
@@ -20,6 +31,39 @@ type JsonBody<T> = {
 }
 
 export interface ApiPaths {
+  '/auth/login': {
+    post: {
+      requestBody: JsonBody<{
+        email: string
+        password: string
+      }>
+      responses: {
+        200: JsonBody<AuthLoginResponse>
+      }
+    }
+  }
+  '/auth/register': {
+    post: {
+      requestBody: JsonBody<{
+        email: string
+        password: string
+        name: string
+      }>
+      responses: {
+        201: JsonBody<AuthRegisterResponse>
+      }
+    }
+  }
+  '/auth/logout': {
+    post: {
+      requestBody: JsonBody<{
+        refresh_token: string
+      }>
+      responses: {
+        200: JsonBody<{ message: string }>
+      }
+    }
+  }
   '/boards': {
     get: {
       responses: {

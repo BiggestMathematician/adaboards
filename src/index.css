@@ -31,5 +31,5 @@
 body {
   margin: 0;
   min-width: 320px;
-  background: radial-gradient(circle at top right, #2e2b3a 0%, #1b1a23 55%);
+  background: var(--app-bg, radial-gradient(circle at top right, #2e2b3a 0%, #1b1a23 55%));
 }
