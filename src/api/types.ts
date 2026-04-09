@@ -54,6 +54,16 @@ export interface ApiPaths {
       }
     }
   }
+  '/auth/logout': {
+    post: {
+      requestBody: JsonBody<{
+        refresh_token: string
+      }>
+      responses: {
+        200: JsonBody<{ message: string }>
+      }
+    }
+  }
   '/boards': {
     get: {
       responses: {

@@ -1,8 +1,15 @@
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
+import { useAuth } from '../auth/useAuth'
 import { BoardIcon } from '../components/icons/BoardIcon'
 import { CheckMarkIcon } from '../components/icons/CheckMarkIcon'
 
 export function LandingPage() {
+  const { isAuthenticated } = useAuth()
+
+  if (isAuthenticated) {
+    return <Navigate to="/home" replace />
+  }
+
   return (
     <main className="landing-shell">
       <section className="landing">

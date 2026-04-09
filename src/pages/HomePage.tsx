@@ -1,14 +1,14 @@
 import { BinIcon } from '../components/icons/BinIcon'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../auth/useAuth'
 import { useBoards, useCreateBoard, useDeleteBoard } from '../hooks/useBoards'
 
-const AUTH_USER_NAME_KEY = 'adaboards-user-name'
-
 export function HomePage() {
+  const { userName } = useAuth()
   const { data: boards = [], isLoading, isError } = useBoards()
   const createBoardMutation = useCreateBoard()
   const deleteBoardMutation = useDeleteBoard()
-  const userName = window.localStorage.getItem(AUTH_USER_NAME_KEY) || 'Ada Lovelace'
+  const displayName = userName ?? 'Ada Lovelace'
 
   function onCreateBoard() {
     const name = window.prompt('Board name')
@@ -21,7 +21,7 @@ export function HomePage() {
       <section className="home-page">
         <div className="home-title-row">
           <h1 className="home-title">
-            Hello, <span>{userName}</span> !
+            Hello, <span>{displayName}</span> !
           </h1>
           <button type="button" className="btn" onClick={onCreateBoard} disabled={createBoardMutation.isPending}>
             Add board
