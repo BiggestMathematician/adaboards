@@ -7,6 +7,31 @@
   --clr-primary: #b497f8;
   --clr-error: #fd7882;
   --clr-success: #bbed91;
+  --surface-page: #262430;
+  --surface-contrast: #f3f2f4;
+  --text-contrast: #282530;
+  --surface-card: rgba(37, 35, 49, 0.75);
+  --border-subtle: #5a5768;
+  --text-on-accent: #1d1b25;
+  --app-bg: radial-gradient(circle at top right, #2e2b3a 0%, #1b1a23 55%);
+}
+
+[data-theme='light'] {
+  --color-gray-800: #edeaf4;
+  --color-light: #1f1d29;
+  --color-muted: #5d596f;
+  --color-disabled: #8a8697;
+  --color-muted-background: #d8d4e3;
+  --clr-primary: #8d63f1;
+  --clr-error: #d7495f;
+  --clr-success: #60b04f;
+  --surface-page: #f6f4fa;
+  --surface-contrast: #262430;
+  --text-contrast: #f3f2f4;
+  --surface-card: #ece8f5;
+  --border-subtle: #c8c2d8;
+  --text-on-accent: #1d1b25;
+  --app-bg: radial-gradient(circle at top right, #efe9fb 0%, #e7e1f3 70%);
 }
 
 .landing-shell {
@@ -20,7 +45,7 @@
   margin: 0;
   padding: 1.15rem 1.4rem 0.9rem;
   color: var(--color-light);
-  background: #262430;
+  background: var(--surface-page);
   border: 0;
 }
 
@@ -195,7 +220,7 @@ a {
   margin: 0;
   padding: 1.15rem 1.4rem;
   color: var(--color-light);
-  background: #262430;
+  background: var(--surface-page);
   border: 0;
 }
 
@@ -212,8 +237,8 @@ a {
 }
 
 .btn-ghost-light {
-  background: #ffffff;
-  color: #282530;
+  background: var(--surface-contrast);
+  color: var(--text-contrast);
 }
 
 .home-title {
@@ -248,9 +273,9 @@ a {
 }
 
 .board-card {
-  border: 1px solid #5a5768;
+  border: 1px solid var(--border-subtle);
   border-radius: 0.95rem;
-  background: rgba(37, 35, 49, 0.75);
+  background: var(--surface-card);
   padding: 0.95rem 1rem 0.9rem;
 }
 
@@ -315,7 +340,7 @@ a {
   margin: 0;
   padding: 1.15rem 1.4rem;
   color: var(--color-light);
-  background: #262430;
+  background: var(--surface-page);
 }
 
 .board-topbar {
@@ -412,7 +437,7 @@ a {
   border: 0;
   border-radius: 0.35rem;
   background: transparent;
-  color: #282530;
+  color: var(--color-light);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -428,7 +453,14 @@ a {
 .kanban-card {
   border-radius: 0.6rem;
   padding: 0.75rem 0.75rem 0.6rem;
-  color: #1d1b25;
+  color: var(--text-on-accent);
+  cursor: grab;
+}
+
+.kanban-card.is-dragging {
+  opacity: 0.75;
+  cursor: grabbing;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
 }
 
 .card-todo {
@@ -453,7 +485,7 @@ a {
 .kanban-task-input {
   border: 0;
   background: transparent;
-  color: #1d1b25;
+  color: var(--text-on-accent);
   font-size: 1.02rem;
   line-height: 1.2;
   font-weight: 600;
@@ -489,7 +521,7 @@ a {
   border: 0;
   border-radius: 0.3rem;
   background: transparent;
-  color: #f3f2f4;
+  color: var(--text-on-accent);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -634,7 +666,59 @@ a {
   margin: 0;
   padding: 1.15rem 1.4rem;
   color: var(--color-light);
-  background: #262430;
+  background: var(--surface-page);
+  border: 0;
+}
+
+.app-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.8rem 1.4rem;
+  border-bottom: 1px solid #4f4c60;
+  background: var(--surface-page);
+  color: var(--color-light);
+  backdrop-filter: blur(8px);
+}
+
+.app-navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.theme-toggle {
+  border: 1px solid #5a5768;
+  background: var(--surface-page);
+  color: var(--color-light);
+  border-radius: 999px;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.theme-toggle-icon {
+  line-height: 1;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
   border: 0;
 }
 

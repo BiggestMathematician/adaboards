@@ -26,13 +26,21 @@ On utilise donc `day-1-setup` comme equivalent.
 ## To-do du jour (ordre recommande)
 
 - [x] Etape 1 - Landing page (UI)
-- [ ] Etape 2 - Home page (UI)
-- [ ] Etape 3 - Board page (UI)
-- [ ] Etape 4 - API boards (GET/POST/DELETE + navigation)
-- [ ] Etape 5 - Login + Signup (UI)
-- [ ] Etape 6 - API tasks (GET/POST/PATCH/DELETE + move left/right)
-- [ ] Etape 7 - Responsive 320px + audit accessibilite
+- [x] Etape 2 - Home page (UI)
+- [x] Etape 3 - Board page (UI)
+- [x] Etape 4 - API boards (GET/POST/DELETE + navigation)
+- [x] Etape 5 - Login + Signup (UI)
+- [x] Etape 6 - API tasks (GET/POST/PATCH/DELETE + move left/right)
+- [~] Etape 7 - Responsive 320px + audit accessibilite (responsive en place, audit a finaliser)
 - [ ] Etape 8 - Lighthouse et correctifs
+
+## Bonus Day 1
+
+- [x] Drag & drop des taches (inter-colonnes + intra-colonne)
+- [x] Couleur de tache selon la colonne
+- [x] Mode clair/sombre (toggle + persistance localStorage)
+- [x] Sauvegarde des boards en localStorage + resynchronisation reseau
+- [ ] Animations & effets supplementaires
 
 ## Regle de suivi
 

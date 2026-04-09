@@ -1,12 +1,48 @@
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import type { FormEvent } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { BoardIcon } from '../components/icons/BoardIcon'
+import { useRegister } from '../hooks/useAuth'
 
 export function SignupPage() {
+  const navigate = useNavigate()
+  const registerMutation = useRegister()
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [formError, setFormError] = useState<string | null>(null)
+
+  function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setFormError(null)
+
+    if (name.trim() === '' || email.trim() === '' || password.trim() === '') {
+      setFormError('All fields are required.')
+      return
+    }
+
+    registerMutation.mutate(
+      {
+        name: name.trim(),
+        email: email.trim(),
+        password,
+      },
+      {
+        onSuccess: () => {
+          navigate('/login')
+        },
+        onError: () => {
+          setFormError('Could not create account. Please try again.')
+        },
+      },
+    )
+  }
+
   return (
     <main className="auth-shell">
       <section className="auth-page">
         <header className="auth-header">
-        <p className="brand">
+          <p className="brand">
             <span className="brand-icon" aria-hidden="true">
               <BoardIcon size={18} color="var(--color-light)" />
             </span>
@@ -14,7 +50,7 @@ export function SignupPage() {
           </p>
         </header>
 
-        <form className="auth-card" onSubmit={(event) => event.preventDefault()}>
+        <form className="auth-card" onSubmit={onSubmit}>
           <h1>Create an account</h1>
           <p className="auth-subtitle">Start organizing your projects today</p>
 
@@ -23,21 +59,34 @@ export function SignupPage() {
             id="signup-fullname"
             type="text"
             placeholder="Ada Lovelace"
-            className="input-error"
-            aria-describedby="fullname-error"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            className={formError ? 'input-error' : undefined}
           />
-          <p id="fullname-error" className="field-error">
-            This field is required
-          </p>
 
           <label htmlFor="signup-email">Email</label>
-          <input id="signup-email" type="email" placeholder="ada@adatechschool.fr" />
+          <input
+            id="signup-email"
+            type="email"
+            placeholder="ada@adatechschool.fr"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            className={formError ? 'input-error' : undefined}
+          />
 
           <label htmlFor="signup-password">Password</label>
-          <input id="signup-password" type="password" />
+          <input
+            id="signup-password"
+            type="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            className={formError ? 'input-error' : undefined}
+          />
 
-          <button className="btn btn-large" type="submit">
-            Create my account
+          {formError ? <p className="field-error">{formError}</p> : null}
+
+          <button className="btn btn-large" type="submit" disabled={registerMutation.isPending}>
+            {registerMutation.isPending ? 'Creating account...' : 'Create my account'}
           </button>
           <p className="auth-footer-link">
             Already have an account? <Link to="/login">Sign in</Link>

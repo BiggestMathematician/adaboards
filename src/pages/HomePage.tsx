@@ -1,12 +1,14 @@
-import { BoardIcon } from '../components/icons/BoardIcon'
 import { BinIcon } from '../components/icons/BinIcon'
 import { Link } from 'react-router-dom'
 import { useBoards, useCreateBoard, useDeleteBoard } from '../hooks/useBoards'
+
+const AUTH_USER_NAME_KEY = 'adaboards-user-name'
 
 export function HomePage() {
   const { data: boards = [], isLoading, isError } = useBoards()
   const createBoardMutation = useCreateBoard()
   const deleteBoardMutation = useDeleteBoard()
+  const userName = window.localStorage.getItem(AUTH_USER_NAME_KEY) || 'Ada Lovelace'
 
   function onCreateBoard() {
     const name = window.prompt('Board name')
@@ -17,24 +19,9 @@ export function HomePage() {
   return (
     <main className="home-shell">
       <section className="home-page">
-        <header className="home-header">
-          <p className="brand">
-            <span className="brand-icon" aria-hidden="true">
-              <BoardIcon size={18} color="var(--color-light)" />
-            </span>
-            AdaBoards
-          </p>
-
-          <div className="home-actions">
-            <button type="button" className="btn btn-ghost-light">
-              Log out
-            </button>
-          </div>
-        </header>
-
         <div className="home-title-row">
           <h1 className="home-title">
-            Hello, <span>Ada Lovelace</span> !
+            Hello, <span>{userName}</span> !
           </h1>
           <button type="button" className="btn" onClick={onCreateBoard} disabled={createBoardMutation.isPending}>
             Add board
